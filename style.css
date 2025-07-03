@@ -1,65 +1,84 @@
-/* Palet Warna Warmindo Raya */
 :root {
-    --red: #d92525; --yellow: #f7b731; --green: #00843d; --blue: #4a90e2; --cream: #f4f1ea;
-    --dark-text: #2c2c2c; --light-text: #ffffff; --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --red: #e53935; --yellow: #fdd835; --green: #43a047; --blue: #1e88e5; --cream: #f5f5f5;
+    --dark-text: #37474f; --light-text: #ffffff; --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Poppins', sans-serif; background-color: var(--cream); color: var(--dark-text); line-height: 1.6; }
-.container { max-width: 900px; margin: 2rem auto; padding: 1.5rem; background-color: var(--light-text); border-radius: 15px; box-shadow: var(--shadow); }
-.hidden { display: none; }
-h2 { font-size: 1.8rem; text-align: center; border-top: 1px solid #eee; padding-top: 2rem; margin-top: 2rem; }
+.container { max-width: 900px; margin: 1rem auto; padding: 1rem; background-color: var(--light-text); border-radius: 15px; box-shadow: var(--shadow); }
+.hidden { display: none !important; }
+h2 { font-size: 1.6rem; text-align: center; border-top: 1px solid #e0e0e0; padding-top: 2rem; margin: 2rem 0 1.5rem 0; font-weight: 600; }
+h3 { font-size: 1.1rem; text-align: center; margin-bottom: 1rem; font-weight: 500; color: #555;}
 
 /* Header & Navigasi */
-.header { text-align: center; margin-bottom: 2rem; }
-.logo-text { font-family: 'Lobster', cursive; font-size: 3rem; color: var(--red); text-shadow: 2px 2px 0 var(--yellow); margin-bottom: 1rem;}
-.main-nav { display: flex; justify-content: center; background-color: #f1f1f1; border-radius: 10px; padding: 5px; }
-.nav-link { padding: 10px 20px; text-decoration: none; color: #555; font-weight: 600; border-radius: 8px; transition: all 0.3s ease; }
-.nav-link.active, .nav-link:hover { background-color: var(--red); color: white; }
+.header { text-align: center; margin-bottom: 1.5rem; }
+.logo-text { font-family: 'Lobster', cursive; font-size: 2.8rem; color: var(--red); text-shadow: 2px 2px 0 var(--yellow); margin-bottom: 1rem; }
+.main-nav { display: flex; justify-content: center; background-color: #e0e0e0; border-radius: 10px; padding: 5px; }
+.nav-link { flex: 1; padding: 10px; text-align: center; text-decoration: none; color: #555; font-weight: 600; border-radius: 8px; transition: all 0.3s ease; }
+.nav-link.active, .nav-link:hover { background-color: var(--red); color: white; transform: translateY(-2px); }
 
-/* Bagian Keuangan */
-.summary-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
-.summary-box { padding: 1.5rem; border-radius: 10px; color: white; text-align: center; }
-.box-pemasukan { background: linear-gradient(135deg, var(--green), #00a850); }
-.box-pengeluaran { background: linear-gradient(135deg, var(--red), #e74c3c); }
-.box-hasil-bersih { background: linear-gradient(135deg, var(--blue), #357abd); }
-.summary-box h4 { font-size: 1rem; margin-bottom: 0.5rem; }
-.summary-box p { font-size: 1.75rem; font-weight: 700; }
-.analysis-section { background-color: #f8f9fa; padding: 1.5rem; border-radius: 10px; }
+/* Ringkasan & Analisis */
+.summary-section { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+.summary-box { padding: 1rem; border-radius: 10px; color: white; text-align: center; }
+.summary-box:nth-child(3) { grid-column: 1 / -1; } /* Hasil Bersih full width */
+.box-pemasukan { background: linear-gradient(135deg, var(--green), #388e3c); }
+.box-pengeluaran { background: linear-gradient(135deg, var(--red), #d32f2f); }
+.box-hasil-bersih { background: linear-gradient(135deg, var(--blue), #1976d2); }
+.summary-box h4 { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.25rem; }
+.summary-box p { font-size: 1.5rem; font-weight: 700; }
+.analysis-section { background-color: #fafafa; padding: 1.5rem; border-radius: 10px; }
 .analysis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-.metric-box { background-color: white; padding: 1rem; border-radius: 8px; text-align: center; }
+.metric-box { background-color: white; padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid #eee; }
 .metric-title { font-size: 0.9rem; color: #666; }
-.metric-value { font-size: 1.5rem; font-weight: 700; color: var(--blue); }
-.chart-container { position: relative; width: 100%; margin: auto; }
+.metric-value { font-size: 1.4rem; font-weight: 700; color: var(--blue); }
+
+/* Grafik */
+.chart-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+@media (min-width: 768px) { .chart-grid { grid-template-columns: 1fr 1fr; } }
+.chart-wrapper { background-color: white; padding: 1rem; border-radius: 8px; border: 1px solid #eee;}
+
+/* Formulir */
 .form-section { background-color: #fafafa; padding: 1.5rem; border-radius: 10px; }
-.form-row { display: flex; gap: 1rem; }
+.form-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+.form-row .form-control { flex: 1 1 150px; }
 .form-control { margin-bottom: 1rem; }
 .form-control label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
 .form-control input, .form-control select { width: 100%; padding: 0.75rem; border: 2px solid #ddd; border-radius: 8px; }
 #jumlah:disabled { background-color: #e9ecef; cursor: not-allowed; }
-.daily-log-group { background-color: #fff; border: 1px solid #e9e9e9; border-radius: 10px; margin-bottom: 2rem; padding: 1.5rem; }
-.daily-header { font-size: 1.5rem; color: var(--red); padding-bottom: 0.75rem; margin-bottom: 1rem; border-bottom: 2px solid var(--cream); }
-.daily-summary { display: flex; flex-wrap: wrap; justify-content: space-around; background-color: #f9f9f9; padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem; gap: 1rem; }
+.pengeluaran-item { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem; }
+.pengeluaran-item .item-deskripsi { flex: 3; }
+.pengeluaran-item .item-jumlah { flex: 2; }
+.btn-hapus-item { background: var(--red); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; }
+
+/* Tombol */
+.btn { display: block; width: 100%; padding: 0.8rem 1.5rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+.btn-submit { background-color: var(--red); color: white; margin-top: 1rem; }
+.btn-tambah-item { background-color: var(--green); color: white; font-size: 0.9rem; padding: 0.5rem; margin-top: 0.5rem; }
+.action-section { margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+.btn-download { background-color: var(--green); color: white; }
+.btn-clear { background-color: #555; color: white; }
+
+/* Riwayat & Absensi */
+.daily-log-group { background-color: white; border: 1px solid #e9e9e9; border-radius: 10px; margin-bottom: 1.5rem; padding: 1rem; }
+.daily-header { font-size: 1.2rem; font-weight: 600; color: var(--red); padding-bottom: 0.5rem; margin-bottom: 0.75rem; border-bottom: 2px solid var(--cream); }
+.daily-summary { display: flex; flex-wrap: wrap; justify-content: space-between; background-color: #fafafa; padding: 0.5rem; border-radius: 8px; margin-bottom: 1rem; gap: 0.5rem; font-size: 0.85rem; }
 .table-wrapper { overflow-x: auto; }
-.daily-table td { padding: 0.75rem; border-bottom: 1px solid #f0f0f0; }
+.daily-table { width: 100%; border-collapse: collapse; }
+.daily-table td { padding: 0.5rem; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
 .rincian-list { list-style: none; padding-left: 0; }
 .rincian-list li { display: flex; justify-content: space-between; }
 .jumlah-pemasukan { color: var(--green); }
 .jumlah-pengeluaran { color: var(--red); }
-.btn { display: inline-block; width: 100%; padding: 0.8rem 1.5rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
-.btn-submit { background-color: var(--red); color: white; margin-top: 1rem; }
-.action-section { margin-top: 2.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.btn-download, .btn-tambah-karyawan { background-color: var(--green); color: white; }
-.btn-clear { background-color: #555; color: white; }
+.btn-hapus { background: transparent; border: 1px solid var(--red); color: var(--red); padding: 5px 10px; border-radius: 5px; cursor: pointer; }
 
-/* Bagian Absensi Karyawan */
-.employee-management-section, .attendance-report-section { background-color: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem; }
+.employee-management-section, .attendance-report-section { background-color: #fafafa; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem; }
 .form-inline { display: flex; gap: 1rem; margin-bottom: 1rem; }
 .form-inline input { flex-grow: 1; }
+.btn-tambah-karyawan { background-color: var(--green); color: white; }
 #list-karyawan { list-style: none; padding: 0; }
 #list-karyawan li { display: flex; justify-content: space-between; align-items: center; padding: 10px; background: white; border-radius: 5px; margin-bottom: 5px; }
 .btn-hapus-karyawan { background-color: var(--red); color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
 #tabel-absensi { width: 100%; border-collapse: collapse; text-align: center; }
 #tabel-absensi th, #tabel-absensi td { border: 1px solid #ddd; padding: 10px; }
-#tabel-absensi th { background-color: #f2f2f2; font-size: 0.9em; }
-#tabel-absensi td:first-child { text-align: left; font-weight: 600; }
+#tabel-absensi th { font-size: 0.8em; }
+#tabel-absensi td:first-child { text-align: left; font-weight: 600; font-size: 0.9em;}
 .absen-checkbox { width: 20px; height: 20px; cursor: pointer; }
