@@ -1,0 +1,84 @@
+/* Palet Warna Warmindo Raya */
+:root {
+    --red: #d92525;
+    --yellow: #f7b731;
+    --green: #00843d;
+    --cream: #f4f1ea;
+    --dark-text: #2c2c2c;
+    --light-text: #ffffff;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Poppins', sans-serif; background-color: var(--cream); color: var(--dark-text); line-height: 1.6; }
+.container { max-width: 850px; margin: 2rem auto; padding: 1.5rem; background-color: var(--light-text); border-radius: 15px; box-shadow: var(--shadow); }
+.hidden { display: none; }
+
+/* Header & Judul */
+.header { text-align: center; padding-bottom: 1.5rem; border-bottom: 3px dashed var(--yellow); margin-bottom: 2rem; }
+.logo-text { font-family: 'Lobster', cursive; font-size: 3rem; color: var(--red); text-shadow: 2px 2px 0 var(--yellow); }
+.header p { font-size: 1.1rem; color: #555; }
+h2 { font-size: 1.8rem; color: var(--dark-text); margin-bottom: 1rem; text-align: center; }
+
+/* Summary Section (Total) */
+.summary-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+.summary-box { padding: 1.5rem; border-radius: 10px; color: var(--light-text); text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.15); transition: transform 0.2s ease-in-out; }
+.summary-box:hover { transform: translateY(-5px); }
+.box-pemasukan { background: linear-gradient(135deg, var(--green), #00a850); }
+.box-pengeluaran { background: linear-gradient(135deg, var(--red), #e74c3c); }
+.box-saldo { background: linear-gradient(135deg, var(--yellow), #f9d423); }
+.summary-box h4 { font-size: 1rem; font-weight: 500; margin-bottom: 0.5rem; text-transform: uppercase; }
+.summary-box p { font-size: 1.75rem; font-weight: 700; }
+
+/* Form Section */
+.form-section { background-color: #fafafa; padding: 1.5rem; border-radius: 10px; margin-bottom: 2.5rem; border: 1px solid #eee; }
+.form-row { display: flex; gap: 1rem; }
+.form-row .form-control { flex: 1; }
+.form-control { margin-bottom: 1rem; }
+.form-control label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
+.form-control input, .form-control select { width: 100%; padding: 0.75rem; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s; }
+.form-control input:focus, .form-control select:focus { outline: none; border-color: var(--yellow); }
+#jumlah:disabled { background-color: #e9ecef; cursor: not-allowed; }
+
+/* Dynamic Pengeluaran Items */
+#pengeluaran-deskripsi-wrapper label { font-weight: 600; }
+.pengeluaran-item { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem; }
+.pengeluaran-item .item-deskripsi { flex: 3; }
+.pengeluaran-item .item-jumlah { flex: 2; }
+.btn-hapus-item { background: var(--red); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; font-weight: bold; cursor: pointer; }
+
+/* Daily Logs Section */
+.daily-log-group { background-color: #fff; border: 1px solid #e9e9e9; border-radius: 10px; margin-bottom: 2rem; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.daily-header { font-size: 1.5rem; color: var(--red); padding-bottom: 0.75rem; margin-bottom: 1rem; border-bottom: 2px solid var(--cream); }
+.daily-summary { display: flex; justify-content: space-around; background-color: #f9f9f9; padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem; }
+.daily-summary-item span { font-weight: 600; }
+.daily-pemasukan { color: var(--green); }
+.daily-pengeluaran { color: var(--red); }
+
+/* Table & Rincian */
+.table-wrapper { overflow-x: auto; }
+.daily-table { width: 100%; border-collapse: collapse; }
+.daily-table th, .daily-table td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+.daily-table th { font-weight: 600; font-size: 0.9rem; }
+.rincian-list { list-style: none; padding-left: 0; margin: 0; }
+.rincian-list li { display: flex; justify-content: space-between; font-size: 0.9em; color: #555; }
+.rincian-list li .item-name { flex-grow: 1; }
+.rincian-list li .item-amount { font-weight: 500; white-space: nowrap; padding-left: 1em; }
+.jumlah-pemasukan { color: var(--green); font-weight: 600; }
+.jumlah-pengeluaran { color: var(--red); font-weight: 600; }
+.btn-hapus { background: transparent; color: var(--red); border: 1px solid var(--red); padding: 5px 10px; border-radius: 5px; cursor: pointer; transition: all 0.2s; }
+.btn-hapus:hover { background: var(--red); color: var(--light-text); }
+
+/* Buttons */
+.btn { display: inline-block; width: 100%; padding: 0.8rem 1.5rem; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+.btn-submit { background-color: var(--red); color: var(--light-text); margin-top: 1rem; }
+.btn-tambah-item { background-color: var(--green); color: var(--light-text); font-size: 0.9rem; padding: 0.5rem; margin-top: 0.5rem; }
+.action-section { margin-top: 2.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.btn-download { background-color: var(--green); color: var(--light-text); }
+.btn-clear { background-color: #555; color: var(--light-text); }
+
+@media (max-width: 768px) {
+    .logo-text { font-size: 2.5rem; }
+    h2 { font-size: 1.5rem; }
+    .action-section, .form-row { grid-template-columns: 1fr; flex-direction: column; }
+}
