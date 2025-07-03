@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekapan Harian Warmindo</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="logo-text">Rekapan Harian Warmindo</h1>
+            <p>Catat pemasukan & pengeluaranmu setiap hari!</p>
+        </header>
+
+        <main>
+            <!-- Ringkasan Total Keseluruhan -->
+            <section class="summary-section">
+                <div class="summary-box box-pemasukan">
+                    <h4>Total Pemasukan</h4>
+                    <p id="total-pemasukan">Rp 0</p>
+                </div>
+                <div class="summary-box box-pengeluaran">
+                    <h4>Total Pengeluaran</h4>
+                    <p id="total-pengeluaran">Rp 0</p>
+                </div>
+                <div class="summary-box box-saldo">
+                    <h4>Saldo Akhir</h4>
+                    <p id="saldo-akhir">Rp 0</p>
+                </div>
+            </section>
+
+            <!-- Form untuk Menambah Transaksi -->
+            <section class="form-section">
+                <h2>🍜 Tambah Catatan Baru</h2>
+                <form id="form-transaksi">
+                    <div class="form-row">
+                        <div class="form-control">
+                            <label for="tanggal">Tanggal</label>
+                            <input type="date" id="tanggal" required>
+                        </div>
+                        <div class="form-control">
+                            <label for="jenis">Jenis</label>
+                            <select id="jenis" required>
+                                <option value="pemasukan">✅ Pemasukan</option>
+                                <option value="pengeluaran">🔥 Pengeluaran</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Wrapper untuk Deskripsi Pemasukan (Simpel) -->
+                    <div id="pemasukan-deskripsi-wrapper">
+                        <div class="form-control">
+                            <label for="deskripsi-pemasukan">Deskripsi Pemasukan</label>
+                            <input type="text" id="deskripsi-pemasukan" placeholder="Contoh: Penjualan hari ini">
+                        </div>
+                    </div>
+
+                    <!-- Wrapper untuk Deskripsi Pengeluaran (Dinamis) -->
+                    <div id="pengeluaran-deskripsi-wrapper" class="hidden">
+                        <label>Rincian Pengeluaran</label>
+                        <div id="pengeluaran-items-list">
+                            <!-- Item pengeluaran dinamis akan ditambahkan di sini -->
+                        </div>
+                        <button type="button" id="btn-tambah-item" class="btn btn-tambah-item">
+                            + Tambah Item Lagi
+                        </button>
+                    </div>
+
+                    <div class="form-control">
+                        <label for="jumlah">Total Jumlah (Rp)</label>
+                        <input type="number" id="jumlah" placeholder="0" required>
+                    </div>
+                    <button class="btn btn-submit" type="submit">Simpan Catatan</button>
+                </form>
+            </section>
+
+            <!-- Tempat untuk menampilkan rekapan harian -->
+            <section class="history-section">
+                <h2>Riwayat Rekapan</h2>
+                <div id="daily-logs-container">
+                    <!-- Data rekapan harian dimuat di sini -->
+                </div>
+            </section>
+            
+            <section class="action-section">
+                 <button id="btn-download" class="btn btn-download">📄 Download Semua Rekapan (CSV)</button>
+                 <button id="btn-clear" class="btn btn-clear">🗑️ Hapus Semua Data</button>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+                  </html>
