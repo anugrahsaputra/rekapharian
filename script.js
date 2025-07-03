@@ -1,30 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
     const app = {
-        // --- State (Data) ---
         transactions: JSON.parse(localStorage.getItem('transactions_v6')) || [],
         employees: JSON.parse(localStorage.getItem('employees_v6')) || [],
         attendance: JSON.parse(localStorage.getItem('attendance_v6')) || {},
         
-        // --- Router & Navigasi ---
         router() {
             const hash = window.location.hash || '#/keuangan';
-            const targetPage = hash.substring(2); // remove '#/'
+            const targetPage = hash.substring(2);
             this.showPage(targetPage);
         },
         showPage(page) {
             const appRoot = document.getElementById('app-root');
-            appRoot.innerHTML = ''; // Kosongkan konten
-            
+            appRoot.innerHTML = '';
             const templateId = `template-${page}`;
             const template = document.getElementById(templateId);
             if (template) {
                 appRoot.appendChild(template.content.cloneNode(true));
                 if (page === 'keuangan') this.keuangan.init();
                 if (page === 'absensi') this.absensi.init();
-            } else { // Fallback ke halaman keuangan jika URL tidak valid
-                this.showPage('keuangan');
-                window.location.hash = '#/keuangan';
-            }
+            } else { this.showPage('keuangan'); window.location.hash = '#/keuangan'; }
             this.updateActiveNav(page);
         },
         updateActiveNav(activePage) {
@@ -32,16 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 link.classList.toggle('active', link.getAttribute('href') === `#/${activePage}`);
             });
         },
-        
-        // --- Inisialisasi Aplikasi ---
         init() {
             window.addEventListener('hashchange', () => this.router());
-            this.router(); // Panggil router saat pertama kali load
+            this.router();
         },
-        
-        // --- Fungsi Utilitas ---
         formatRupiah: (n) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(n),
-        formatTanggal: (dStr) => {
+        formatTanggal: (dStr) => { /* ... (logika sama) ... */
             const date = new Date(dStr + 'T00:00:00');
             const today = new Date(); today.setHours(0,0,0,0);
             const yesterday = new Date(today); yesterday.setDate(yesterday.getDate()-1);
@@ -50,19 +40,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return new Intl.DateTimeFormat('id-ID', { weekday: 'long', day: 'numeric', month: 'short' }).format(date);
         },
 
-        // ======================= SUB-MODUL KEUANGAN =======================
         keuangan: {
             parent: null,
             init() { 
-                this.parent = app;
-                this.initSelectors();
-                this.initListeners();
-                this.setDefaultDate();
-                this.toggleForm();
-                this.renderAll();
+                this.parent = app; this.initSelectors(); this.initListeners();
+                this.setDefaultDate(); this.toggleForm(); this.renderAll();
             },
             initSelectors() {
-                // Selektor khusus halaman keuangan
+                // ... (Selektor sama, hanya ganti nama canvas)
                 this.formTransaksi = document.getElementById('form-transaksi');
                 this.tanggalInput = document.getElementById('tanggal');
                 this.jenisInput = document.getElementById('jenis');
@@ -75,25 +60,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.totalPemasukanEl = document.getElementById('total-pemasukan');
                 this.totalPengeluaranEl = document.getElementById('total-pengeluaran');
                 this.hasilBersihEl = document.getElementById('hasil-bersih');
-                this.hariUntungEl = document.getElementById('hari-untung');
-                this.hariBorosEl = document.getElementById('hari-boros');
-                this.rataPemasukanEl = document.getElementById('rata-pemasukan');
-                this.incomeChartCanvas = document.getElementById('incomeChart').getContext('2d');
-                this.expenseChartCanvas = document.getElementById('expenseChart').getContext('2d');
                 this.dailyLogsContainer = document.getElementById('daily-logs-container');
-                this.incomeChart = null;
-                this.expenseChart = null;
+                this.chartCanvas = document.getElementById('statementChart')?.getContext('2d'); // Ganti nama canvas
+                this.statementChart = null; // Ganti nama instance chart
             },
             initListeners(){
                 this.formTransaksi.addEventListener('submit', (e) => this.addTransaction(e));
                 this.jenisInput.addEventListener('change', () => this.toggleForm());
                 this.btnTambahItem.addEventListener('click', () => this.addPengeluaranItem());
                 document.getElementById('btn-clear-keuangan').addEventListener('click', () => this.clearData());
+                document.getElementById('btn-download').addEventListener('click', () => this.downloadCSV());
             },
             save() { localStorage.setItem('transactions_v6', JSON.stringify(this.parent.transactions)); },
             clearData() { if(confirm('Hapus semua data KEUANGAN?')){ this.parent.transactions=[]; this.save(); this.renderAll(); }},
             setDefaultDate() { this.tanggalInput.value = new Date().toISOString().slice(0, 10); },
-            toggleForm() {
+            toggleForm() { /* ... (Logika sama) ... */
                 const isPemasukan = this.jenisInput.value === 'pemasukan';
                 this.pemasukanFields.classList.toggle('hidden', !isPemasukan);
                 this.pengeluaranFields.classList.toggle('hidden', isPemasukan);
@@ -101,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!isPemasukan && this.pengeluaranItemsList.children.length === 0) this.addPengeluaranItem();
                 this.updateTotalPengeluaran();
             },
-            addPengeluaranItem() {
+            addPengeluaranItem() { /* ... (Logika sama) ... */
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'pengeluaran-item';
                 itemDiv.innerHTML = `<input type="text" class="item-deskripsi" placeholder="Deskripsi item" required><input type="number" class="item-jumlah" placeholder="Jumlah" required><button type="button" class="btn-hapus-item">X</button>`;
@@ -109,13 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 itemDiv.querySelector('.btn-hapus-item').addEventListener('click', () => { itemDiv.remove(); this.updateTotalPengeluaran(); });
                 itemDiv.querySelector('.item-jumlah').addEventListener('input', () => this.updateTotalPengeluaran());
             },
-            updateTotalPengeluaran() {
+            updateTotalPengeluaran() { /* ... (Logika sama) ... */
                 if (this.jenisInput.value === 'pengeluaran') {
                     const items = this.pengeluaranItemsList.querySelectorAll('.item-jumlah');
                     this.jumlahInput.value = [...items].reduce((s, i) => s + (+i.value || 0), 0);
                 }
             },
-            addTransaction(e) { /* ... (logika sama, hanya referensi this.parent -> this) ... */
+            addTransaction(e) { /* ... (Logika sama) ... */
                 e.preventDefault();
                 let deskripsi;
                 if(this.jenisInput.value === 'pemasukan'){
@@ -140,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.setDefaultDate();
                 this.toggleForm();
             },
-            deleteTransaction(id) {
+            deleteTransaction(id) { /* ... (Logika sama) ... */
                 if(confirm('Hapus catatan ini?')) {
                     this.parent.transactions = this.parent.transactions.filter(t => t.id !== id);
                     this.save();
@@ -155,14 +136,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.totalPengeluaranEl.textContent = this.parent.formatRupiah(totalPengeluaran);
                 this.hasilBersihEl.textContent = this.parent.formatRupiah(totalPemasukan-totalPengeluaran);
                 this.renderDailyLogs(grouped);
-                this.renderAnalytics(grouped);
+                this.renderChart(grouped);
             },
-            renderDailyLogs(grouped) { /* ... (logika sama, hanya referensi this.parent -> this) ... */
+            renderDailyLogs(grouped) { /* ... (Logika sama) ... */
                 this.dailyLogsContainer.innerHTML = '';
-                if(Object.keys(grouped).length === 0) {
-                     this.dailyLogsContainer.innerHTML = '<p style="text-align:center; color: #777;">Belum ada catatan keuangan.</p>';
-                     return;
-                }
+                if(Object.keys(grouped).length === 0) { this.dailyLogsContainer.innerHTML = '<p style="text-align:center; color: #777; padding: 2rem 0;">Belum ada catatan keuangan.</p>'; return; }
                 Object.keys(grouped).sort((a, b) => new Date(b) - new Date(a)).forEach(date => {
                     const groupDiv = document.createElement('div');
                     groupDiv.className = 'daily-log-group';
@@ -180,43 +158,68 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.dailyLogsContainer.appendChild(groupDiv);
                 });
             },
-            renderAnalytics(grouped) { /* ... (logika sama, plus logika dua grafik) ... */
-                const dailySummaries = Object.keys(grouped).map(date => ({
-                    date,
-                    pemasukan: grouped[date].filter(t => t.jenis === 'pemasukan').reduce((s, t) => s + t.jumlah, 0),
-                    pengeluaran: grouped[date].filter(t => t.jenis === 'pengeluaran').reduce((s, t) => s + t.jumlah, 0),
-                }));
-                 if(dailySummaries.length > 0){
-                    const hariUntung = dailySummaries.reduce((p, c) => ((p.pemasukan - p.pengeluaran) > (c.pemasukan - c.pengeluaran)) ? p : c);
-                    const hariBoros = dailySummaries.reduce((p, c) => p.pengeluaran > c.pengeluaran ? p : c);
-                    this.hariUntungEl.textContent = this.parent.formatTanggal(hariUntung.date);
-                    this.hariBorosEl.textContent = this.parent.formatTanggal(hariBoros.date);
-                    this.rataPemasukanEl.textContent = this.parent.formatRupiah(dailySummaries.reduce((s,d)=>s+d.pemasukan,0) / dailySummaries.length);
-                } else {
-                    this.hariUntungEl.textContent = 'N/A';
-                    this.hariBorosEl.textContent = 'N/A';
-                    this.rataPemasukanEl.textContent = 'Rp 0';
-                }
-                const last7DaysData = dailySummaries.sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0, 7).reverse();
-                const labels = last7DaysData.map(d => new Intl.DateTimeFormat('id-ID', {day: '2-digit', month: 'short'}).format(new Date(d.date+'T00:00:00')));
+            // PERUBAHAN UTAMA: Logika Grafik Baru
+            renderChart(grouped) {
+                if (!this.chartCanvas) return;
+                if (this.statementChart) this.statementChart.destroy();
                 
-                if (this.incomeChart) this.incomeChart.destroy();
-                this.incomeChart = new Chart(this.incomeChartCanvas, {type:'line', data:{labels, datasets:[{label:'Pemasukan', data:last7DaysData.map(d=>d.pemasukan), borderColor: 'rgba(67, 160, 71, 1)', backgroundColor: 'rgba(67, 160, 71, 0.2)', fill:true, tension: 0.3}]}});
-                
-                if (this.expenseChart) this.expenseChart.destroy();
-                this.expenseChart = new Chart(this.expenseChartCanvas, {type:'line', data:{labels, datasets:[{label:'Pengeluaran', data:last7DaysData.map(d=>d.pengeluaran), borderColor: 'rgba(229, 57, 53, 1)', backgroundColor: 'rgba(229, 57, 53, 0.2)', fill:true, tension: 0.3}]}});
-            },
-        },
+                const today = new Date();
+                const labels = Array.from({length: 7}, (_, i) => {
+                    const d = new Date(today);
+                    d.setDate(today.getDate() - i);
+                    return d;
+                }).reverse();
 
-        // ======================= SUB-MODUL ABSENSI =======================
-        absensi: {
-            parent: null,
-            init() { /* ... (sama seperti sebelumnya, hanya initSelectors & initListeners) ... */
-                this.parent = app;
-                this.initSelectors();
-                this.initListeners();
-                this.setDefaultDate();
-                this.renderAll();
+                const dataIn = labels.map(labelDate => {
+                    const dateKey = labelDate.toISOString().slice(0, 10);
+                    return grouped[dateKey]?.filter(t => t.jenis === 'pemasukan').reduce((s, t) => s + t.jumlah, 0) || 0;
+                });
+                const dataOut = labels.map(labelDate => {
+                    const dateKey = labelDate.toISOString().slice(0, 10);
+                    return grouped[dateKey]?.filter(t => t.jenis === 'pengeluaran').reduce((s, t) => s + t.jumlah, 0) || 0;
+                });
+
+                const incomeGradient = this.chartCanvas.createLinearGradient(0, 0, 0, 180);
+                incomeGradient.addColorStop(0, 'rgba(0, 169, 96, 0.4)');
+                incomeGradient.addColorStop(1, 'rgba(16, 142, 233, 0)');
+                
+                this.statementChart = new Chart(this.chartCanvas, {
+                    type: 'line',
+                    data: {
+                        labels: labels.map(d => new Intl.DateTimeFormat('id-ID', {day:'numeric', month:'short'}).format(d)),
+                        datasets: [
+                            { label: 'Pemasukan', data: dataIn, borderColor: '#00a960', pointBackgroundColor: '#00a960', pointBorderColor: '#fff', tension: 0.4 },
+                            { label: 'Pengeluaran', data: dataOut, borderColor: '#f44336', backgroundColor: incomeGradient, fill: true, pointBackgroundColor: '#f44336', pointBorderColor: '#fff', tension: 0.4 }
+                        ]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { display: false }, x: { ticks: { color: 'rgba(255,255,255,0.8)' }, grid: { color: 'rgba(255,255,255,0.1)' } } }
+                    }
+                });
+            },
+            downloadCSV() { /* ... (Logika sama) ... */
+                if (this.parent.transactions.length === 0) { alert('Tidak ada data untuk diunduh.'); return; }
+                let csvContent = "ID,Tanggal,Jenis,Jumlah,Rincian\n";
+                const sorted = [...this.parent.transactions].sort((a,b) => new Date(a.tanggal) - new Date(b.tanggal));
+                sorted.forEach(t => {
+                    let rincian = (t.jenis === 'pemasukan') ? t.deskripsi : t.deskripsi.map(item => `${item.item}: ${item.jumlah}`).join('; ');
+                    const safeRincian = `"${rincian.replace(/"/g, '""')}"`;
+                    csvContent += `${t.id},${t.tanggal},${t.jenis},${t.jumlah},${safeRincian}\n`;
+                });
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a'); link.setAttribute('href', URL.createObjectURL(blob));
+                link.setAttribute('download', `rekap-keuangan-warmindo-${new Date().toISOString().slice(0, 10)}.csv`);
+                document.body.appendChild(link); link.click(); document.body.removeChild(link);
+            }
+        },
+        
+        absensi: { /* ... (Seluruh logika absensi tetap sama persis seperti versi sebelumnya) ... */
+             parent: null,
+            init() { 
+                this.parent = app; this.initSelectors(); this.initListeners();
+                this.setDefaultDate(); this.renderAll();
             },
             initSelectors() {
                 this.formKaryawan = document.getElementById('form-tambah-karyawan');
@@ -244,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.listKaryawan.appendChild(li);
                 });
             },
-            addEmployee(e) { /* ... (logika sama) ... */
+            addEmployee(e) { 
                 e.preventDefault();
                 const newName = this.namaKaryawanInput.value.trim();
                 if (newName && !this.parent.employees.includes(newName)) {
@@ -257,20 +260,18 @@ document.addEventListener('DOMContentLoaded', () => {
             deleteEmployee(name) {
                 if (confirm(`Yakin hapus karyawan "${name}"?`)) {
                     this.parent.employees = this.parent.employees.filter(emp => emp !== name);
+                    Object.keys(this.parent.attendance).forEach(date => { delete this.parent.attendance[date][name]; });
                     this.save();
                     this.renderAll();
                 }
             },
             renderAttendanceTable(selectedDate) {
                 this.tabelAbsensiContainer.innerHTML = '';
-                if (this.parent.employees.length === 0) {
-                     this.tabelAbsensiContainer.innerHTML = '<p style="text-align:center; color: #777;">Belum ada karyawan. Tambahkan di atas.</p>';
-                    return;
-                }
+                if (this.parent.employees.length === 0) { this.tabelAbsensiContainer.innerHTML = '<p style="text-align:center; color: #777;">Belum ada karyawan. Tambahkan di atas.</p>'; return; }
                 const weekDates = this.getWeekDates(selectedDate);
                 const table = document.createElement('table');
                 table.id = 'tabel-absensi';
-                table.innerHTML = `<thead><tr><th>Karyawan</th>${weekDates.map(d => `<th>${new Intl.DateTimeFormat('id-ID',{weekday:'short'}).format(d)}<br>${d.getDate()}/${d.getMonth()+1}</th>`).join('')}</tr></thead>`;
+                table.innerHTML = `<thead><tr><th>Karyawan</th>${weekDates.map(d => `<th>${new Intl.DateTimeFormat('id-ID',{weekday:'short'}).format(d)}<br>${d.getDate()}</th>`).join('')}</tr></thead>`;
                 const tbody = table.createTBody();
                 this.parent.employees.forEach(emp => {
                     const row = tbody.insertRow();
