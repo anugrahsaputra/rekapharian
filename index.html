@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rekapan Harian Warmindo</title>
+    <title>Sistem Rekapan Warmindo</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,87 +13,73 @@
 
     <div class="container">
         <header class="header">
-            <h1 class="logo-text">Rekapan Harian Warmindo</h1>
-            <p>Catat pemasukan & pengeluaranmu setiap hari!</p>
+            <h1 class="logo-text">Sistem Rekapan Warmindo</h1>
+            <nav class="main-nav">
+                <a href="#" class="nav-link active" data-target="keuangan-section">Keuangan</a>
+                <a href="#" class="nav-link" data-target="absensi-section">Absensi Karyawan</a>
+            </nav>
         </header>
 
         <main>
-            <!-- Ringkasan Total Keseluruhan -->
-            <section class="summary-section">
-                <div class="summary-box box-pemasukan">
-                    <h4>Total Pemasukan</h4>
-                    <p id="total-pemasukan">Rp 0</p>
-                </div>
-                <div class="summary-box box-pengeluaran">
-                    <h4>Total Pengeluaran</h4>
-                    <p id="total-pengeluaran">Rp 0</p>
-                </div>
-                <div class="summary-box box-saldo">
-                    <h4>Saldo Akhir</h4>
-                    <p id="saldo-akhir">Rp 0</p>
-                </div>
-            </section>
-
-            <!-- Form untuk Menambah Transaksi -->
-            <section class="form-section">
-                <h2>🍜 Tambah Catatan Baru</h2>
-                <form id="form-transaksi">
-                    <div class="form-row">
-                        <div class="form-control">
-                            <label for="tanggal">Tanggal</label>
-                            <input type="date" id="tanggal" required>
-                        </div>
-                        <div class="form-control">
-                            <label for="jenis">Jenis</label>
-                            <select id="jenis" required>
-                                <option value="pemasukan">✅ Pemasukan</option>
-                                <option value="pengeluaran">🔥 Pengeluaran</option>
-                            </select>
-                        </div>
+            <!-- ======================= BAGIAN KEUANGAN ======================= -->
+            <div id="keuangan-section" class="main-section">
+                <section class="summary-section">
+                    <div class="summary-box box-pemasukan"><h4>Total Pemasukan</h4><p id="total-pemasukan">Rp 0</p></div>
+                    <div class="summary-box box-pengeluaran"><h4>Total Pengeluaran</h4><p id="total-pengeluaran">Rp 0</p></div>
+                    <div class="summary-box box-hasil-bersih"><h4>Hasil Bersih</h4><p id="hasil-bersih">Rp 0</p></div>
+                </section>
+                
+                <section class="analysis-section">
+                    <h2>📊 Analisis & Laporan Keuangan</h2>
+                    <div class="analysis-grid">
+                        <div class="metric-box"><div class="metric-title">Hari Paling Untung</div><div class="metric-value" id="hari-untung">N/A</div></div>
+                        <div class="metric-box"><div class="metric-title">Hari Paling Boros</div><div class="metric-value" id="hari-boros">N/A</div></div>
+                        <div class="metric-box"><div class="metric-title">Rata-Rata Pemasukan Harian</div><div class="metric-value" id="rata-pemasukan">Rp 0</div></div>
                     </div>
-                    
-                    <!-- Wrapper untuk Deskripsi Pemasukan (Simpel) -->
-                    <div id="pemasukan-deskripsi-wrapper">
-                        <div class="form-control">
-                            <label for="deskripsi-pemasukan">Deskripsi Pemasukan</label>
-                            <input type="text" id="deskripsi-pemasukan" placeholder="Contoh: Penjualan hari ini">
-                        </div>
-                    </div>
+                    <div class="chart-container"><canvas id="performanceChart"></canvas></div>
+                </section>
 
-                    <!-- Wrapper untuk Deskripsi Pengeluaran (Dinamis) -->
-                    <div id="pengeluaran-deskripsi-wrapper" class="hidden">
-                        <label>Rincian Pengeluaran</label>
-                        <div id="pengeluaran-items-list">
-                            <!-- Item pengeluaran dinamis akan ditambahkan di sini -->
-                        </div>
-                        <button type="button" id="btn-tambah-item" class="btn btn-tambah-item">
-                            + Tambah Item Lagi
-                        </button>
-                    </div>
+                <section class="form-section">
+                    <h2>🍜 Tambah Catatan Keuangan</h2>
+                    <form id="form-transaksi">
+                        <div class="form-row"><div class="form-control"><label for="tanggal">Tanggal</label><input type="date" id="tanggal" required></div><div class="form-control"><label for="jenis">Jenis</label><select id="jenis" required><option value="pemasukan">✅ Pemasukan</option><option value="pengeluaran">🔥 Pengeluaran</option></select></div></div>
+                        <div id="pemasukan-deskripsi-wrapper"><div class="form-control"><label for="deskripsi-pemasukan">Deskripsi Pemasukan</label><input type="text" id="deskripsi-pemasukan" placeholder="Contoh: Penjualan hari ini"></div></div>
+                        <div id="pengeluaran-deskripsi-wrapper" class="hidden"><label>Rincian Pengeluaran</label><div id="pengeluaran-items-list"></div><button type="button" id="btn-tambah-item" class="btn btn-tambah-item">+ Tambah Item Lagi</button></div>
+                        <div class="form-control"><label for="jumlah">Total Jumlah (Rp)</label><input type="number" id="jumlah" placeholder="0" required></div>
+                        <button class="btn btn-submit" type="submit">Simpan Catatan</button>
+                    </form>
+                </section>
 
+                <section class="history-section"><h2>Riwayat Rekapan Keuangan</h2><div id="daily-logs-container"></div></section>
+                <section class="action-section"><button id="btn-download" class="btn btn-download">📄 Download Rekap (CSV)</button><button id="btn-clear-keuangan" class="btn btn-clear">🗑️ Hapus Data Keuangan</button></section>
+            </div>
+
+            <!-- ======================= BAGIAN ABSENSI KARYAWAN (DATABASE LOKAL) ======================= -->
+            <div id="absensi-section" class="main-section hidden">
+                <section class="employee-management-section">
+                    <h2>👤 Manajemen Karyawan</h2>
+                    <form id="form-tambah-karyawan" class="form-inline">
+                        <input type="text" id="nama-karyawan" placeholder="Masukkan Nama Karyawan Baru" required>
+                        <button type="submit" class="btn btn-tambah-karyawan">Tambah</button>
+                    </form>
+                    <ul id="list-karyawan"></ul>
+                </section>
+
+                <section class="attendance-report-section">
+                    <h2>📅 Laporan Absensi Mingguan</h2>
                     <div class="form-control">
-                        <label for="jumlah">Total Jumlah (Rp)</label>
-                        <input type="number" id="jumlah" placeholder="0" required>
+                        <label for="pilih-minggu">Pilih Tanggal untuk Melihat Laporan Mingguan</label>
+                        <input type="date" id="pilih-minggu">
                     </div>
-                    <button class="btn btn-submit" type="submit">Simpan Catatan</button>
-                </form>
-            </section>
+                    <div id="tabel-absensi-container" class="table-wrapper"></div>
+                </section>
+                 <section class="action-section"><button id="btn-clear-absensi" class="btn btn-clear">🗑️ Hapus Semua Data Karyawan & Absensi</button></section>
+            </div>
 
-            <!-- Tempat untuk menampilkan rekapan harian -->
-            <section class="history-section">
-                <h2>Riwayat Rekapan</h2>
-                <div id="daily-logs-container">
-                    <!-- Data rekapan harian dimuat di sini -->
-                </div>
-            </section>
-            
-            <section class="action-section">
-                 <button id="btn-download" class="btn btn-download">📄 Download Semua Rekapan (CSV)</button>
-                 <button id="btn-clear" class="btn btn-clear">🗑️ Hapus Semua Data</button>
-            </section>
         </main>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
-                  </html>
+</html>
