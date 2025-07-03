@@ -1,14 +1,7 @@
 :root {
-    --primary-blue: #108ee9;
-    --dark-blue: #0d73bc;
-    --background-color: #f1f3f5;
-    --card-bg: #ffffff;
-    --text-dark: #333;
-    --text-light: #888;
-    --white: #ffffff;
-    --green: #00a960;
-    --red: #f44336;
-    --orange: #f57c00;
+    --primary-blue: #108ee9; --dark-blue: #0d73bc; --background-color: #f1f3f5;
+    --card-bg: #ffffff; --text-dark: #333; --text-light: #888; --white: #ffffff;
+    --green: #00a960; --red: #f44336; --orange: #f57c00;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Poppins', sans-serif; background-color: var(--primary-blue); }
@@ -22,10 +15,10 @@ body { font-family: 'Poppins', sans-serif; background-color: var(--primary-blue)
 .nav-link.active, .nav-link:hover { background-color: var(--white); color: var(--primary-blue); }
 
 /* Konten Utama */
-.app-content { }
 .content-wrapper { padding: 1rem; }
 .card { background-color: var(--card-bg); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); margin-bottom: 1.5rem; }
-h2 { font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; text-align: left; }
+h2 { font-size: 1.2rem; font-weight: 600; margin-bottom: 1.5rem; text-align: left; display: flex; align-items: center; gap: 0.5rem; }
+h2 svg { color: var(--primary-blue); }
 
 /* Grafik */
 .chart-section { background-color: var(--primary-blue); padding: 1rem 1rem 2rem 1rem; }
@@ -44,15 +37,23 @@ h2 { font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; text-align: left;
 .form-row { display: flex; gap: 1rem; }
 .form-control { margin-bottom: 1rem; }
 .form-control label { display: block; font-size: 0.9rem; font-weight: 500; margin-bottom: 0.5rem; }
-.form-control input, .form-control select { width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; }
-.btn { display: block; width: 100%; padding: 0.8rem 1.5rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;}
+.form-control input, .form-control select { 
+    width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; 
+    /* PERBAIKAN: Mencegah browser mengubah tampilan input date */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: white; /* Pastikan background putih */
+}
+#jumlah:disabled { background-color: #f1f3f5; cursor: not-allowed; }
+
+/* Tombol */
+.btn { display: block; width: 100%; padding: 0.8rem 1.5rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
 .btn-submit { background-color: var(--primary-blue); color: white; }
 .btn-submit:hover { background-color: var(--dark-blue); }
 .action-section { display: flex; flex-direction: column; gap: 0.75rem; }
-.btn-download { background-color: var(--green); color: white; }
-.btn-clear { background-color: #6c757d; color: white; }
-.pengeluaran-item { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem; }
-.btn-tambah-item { background-color: #e8f5e9; color: var(--green); font-size: 0.9rem; padding: 0.5rem; margin-top: 0.5rem; border: 1px dashed var(--green); }
+.btn-download, .btn-tambah-karyawan { background-color: var(--green); color: white; }
+.btn-clear { background-color: #6c757d; color: white; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
 
 /* Riwayat & Absensi */
 .history-section h2 { margin-bottom: 0; }
@@ -62,12 +63,15 @@ h2 { font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; text-align: left;
 .table-wrapper { overflow-x: auto; }
 .daily-table td { padding: 0.75rem 1rem; border-bottom: 1px solid #f5f5f5; }
 .daily-table tr:last-child td { border-bottom: none; }
-.jumlah-pemasukan { color: var(--green); }
-.jumlah-pengeluaran { color: var(--red); }
-.rincian-list { list-style: none; padding-left: 0; }
 .btn-hapus { background: transparent; border: 1px solid var(--red); color: var(--red); padding: 4px 8px; font-size: 0.8rem; border-radius: 5px; cursor: pointer; }
 
+/* PERBAIKAN: Layout form inline di absensi */
+.form-inline { display: flex; gap: 0.75rem; align-items: center; }
+.form-inline input { flex-grow: 1; }
+.form-inline button { flex-shrink: 0; padding: 0.75rem 1.5rem; }
+
 #list-karyawan li { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #eee; }
+.btn-hapus-karyawan { background-color: var(--red); color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
 #tabel-absensi { width: 100%; text-align: center; }
 #tabel-absensi th, #tabel-absensi td { padding: 10px; border: 1px solid #eee; }
 #tabel-absensi td:first-child { text-align: left; }
