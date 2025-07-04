@@ -7,7 +7,7 @@
 body { font-family: 'Poppins', sans-serif; background-color: var(--primary-blue); }
 .app-container { max-width: 1000px; margin: 0 auto; background-color: var(--background-color); min-height: 100vh; }
 
-/* ... (CSS Header, Navigasi, Grafik, Summary, Form Keuangan sama seperti sebelumnya) ... */
+/* Header & Navigasi */
 .app-header { background-color: var(--primary-blue); color: var(--white); padding: 1.5rem 1rem 1rem 1rem; text-align: center; }
 .app-header h1 { font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; }
 .main-nav { display: flex; justify-content: center; background-color: rgba(0,0,0,0.1); border-radius: 10px; padding: 5px; }
@@ -25,42 +25,44 @@ h2 svg { color: var(--primary-blue); }
 .btn-clear { background-color: #6c757d; color: white; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
 .table-wrapper { overflow-x: auto; }
 
-/* ==================================
-   GAYA BARU UNTUK JADWAL & ABSENSI
-   ================================== */
+/* ... (Gaya lainnya tetap sama) ... */
+.chart-section { background-color: var(--primary-blue); padding: 1rem 1rem 2rem 1rem; }
+.summary-section { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: -30px; position: relative; z-index: 10; margin-bottom: 1.5rem; }
+.summary-box { background: var(--card-bg); padding: 1rem; border-radius: 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.06);}
+.summary-box:nth-child(3) { grid-column: 1 / -1; }
+.summary-box h4 { font-size: 0.8rem; color: var(--text-light); font-weight: 500; }
+.summary-box p { font-size: 1.4rem; font-weight: 700; }
+#total-pemasukan { color: var(--green); }
+#total-pengeluaran { color: var(--red); }
+#hasil-bersih { color: var(--primary-blue); }
+.form-row { display: flex; gap: 1rem; }
+#jumlah:disabled { background-color: #f1f3f5; cursor: not-allowed; }
+.btn-submit { background-color: var(--primary-blue); color: white; }
+.btn-download, .btn-tambah-karyawan { background-color: var(--green); color: white; }
+.history-section h2 { margin-bottom: 0; }
+.daily-log-group { background-color: var(--card-bg); border-radius: 12px; margin-top: 1rem; overflow: hidden; }
+.daily-header { font-size: 1rem; font-weight: 600; padding: 1rem; background-color: #fafafa; border-bottom: 1px solid #eee;}
+.daily-summary { display: flex; justify-content: space-between; padding: 0.75rem 1rem; font-size: 0.85rem; border-bottom: 1px solid #eee;}
+.daily-table td { padding: 0.75rem 1rem; border-bottom: 1px solid #f5f5f5; }
+.daily-table tr:last-child td { border-bottom: none; }
+.jumlah-pemasukan { color: var(--green); }
+.jumlah-pengeluaran { color: var(--red); }
+.rincian-list { list-style: none; padding-left: 0; }
+.btn-hapus { background: transparent; border: 1px solid var(--red); color: var(--red); padding: 4px 8px; font-size: 0.8rem; border-radius: 5px; cursor: pointer; }
 .form-inline { display: flex; gap: 0.75rem; align-items: center; }
 .form-inline input { flex-grow: 1; min-width: 0; }
-.form-inline button { flex-shrink: 0; padding: 0.75rem 1.5rem; width: auto; background-color: var(--green); color: white; }
-
-#list-karyawan { list-style: none; padding: 0; margin-top: 1rem; }
-#list-karyawan li { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #eee; }
+.form-inline button { flex-shrink: 0; padding: 0.75rem 1.5rem; width: auto; }
+#list-karyawan li { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #eee; margin-top: 0.5rem; }
 .btn-hapus-karyawan { background-color: var(--red); color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
-
 #tabel-absensi { width: 100%; border-collapse: collapse; text-align: center; }
 #tabel-absensi th, #tabel-absensi td { border: 1px solid #eee; padding: 5px; }
 #tabel-absensi th { font-size: 0.8em; padding: 10px 5px; background-color: #fafafa; }
 #tabel-absensi td:first-child { text-align: left; font-weight: 600; font-size: 0.9em; padding-left: 10px;}
-
-/* Gaya untuk dropdown shift */
-.shift-select {
-    width: 100%;
-    border: none;
-    background-color: transparent;
-    padding: 10px 5px;
-    font-size: 0.9em;
-    font-weight: 500;
-    border-radius: 4px;
-    -webkit-appearance: none;
-    appearance: none;
-    text-align: center;
-    cursor: pointer;
-}
+.shift-select { width: 100%; border: none; background-color: transparent; padding: 10px 5px; font-size: 0.9em; font-weight: 500; border-radius: 4px; -webkit-appearance: none; appearance: none; text-align: center; cursor: pointer; }
 .shift-select.shift-pagi { background-color: #e8f5e9; color: #2e7d32; }
 .shift-select.shift-siang { background-color: #e3f2fd; color: #1565c0; }
 .shift-select.shift-malam { background-color: #eceff1; color: #37474f; }
 .shift-select.shift-libur { background-color: #fafafa; color: #999; }
-
-/* Gaya untuk ringkasan shift */
 #shift-summary-container { margin-top: 1.5rem; background-color: #fafafa; padding: 1rem; border-radius: 8px; }
 #shift-summary-container h3 { font-size: 1rem; margin-bottom: 0.75rem; }
 .summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 0.75rem; }
